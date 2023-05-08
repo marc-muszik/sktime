@@ -32,7 +32,7 @@ class _StatsModelsAdapter(BaseForecaster):
         self._fitted_forecaster = None
         super(_StatsModelsAdapter, self).__init__()
 
-    def _fit(self, y, X=None, fh=None):
+    def _fit(self, y, X=None, fh=None, *args, **kwargs):
         """Fit to training data.
 
         Parameters
@@ -52,14 +52,14 @@ class _StatsModelsAdapter(BaseForecaster):
         # so we coerce them here to pd.RangeIndex
         if isinstance(y, pd.Series) and pd.api.types.is_integer_dtype(y.index):
             y, X = _coerce_int_to_range_index(y, X)
-        self._fit_forecaster(y, X)
+        self._fit_forecaster(y, X, *args, **kwargs)
         return self
 
-    def _fit_forecaster(self, y_train, X_train=None):
+    def _fit_forecaster(self, y_train, X_train=None, *args, **kwargs):
         """Log used internally in fit."""
         raise NotImplementedError("abstract method")
 
-    def _update(self, y, X=None, update_params=True):
+    def _update(self, y, X=None, update_params=True, *args, **kwargs):
         """Update used internally in update."""
         if update_params or self.is_composite():
             super()._update(y, X, update_params=update_params)
