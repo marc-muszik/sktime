@@ -164,7 +164,7 @@ class SARIMAX(_StatsModelsAdapter):
 
         super().__init__(random_state=random_state)
 
-    def _fit_forecaster(self, y, X=None):
+    def _fit_forecaster(self, y, X=None, *args, **kwargs):
         from statsmodels.tsa.api import SARIMAX as _SARIMAX
 
         self._forecaster = _SARIMAX(
@@ -188,7 +188,7 @@ class SARIMAX(_StatsModelsAdapter):
             missing=self.missing,
             validate_specification=self.validate_specification,
         )
-        self._fitted_forecaster = self._forecaster.fit()
+        self._fitted_forecaster = self._forecaster.fit(*args, **kwargs)
 
     def summary(self):
         """Get a summary of the fitted forecaster.
